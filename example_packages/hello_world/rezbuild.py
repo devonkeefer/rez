@@ -2,6 +2,7 @@ import os
 import os.path
 import shutil
 import stat
+from rez.utils.filesystem import safe_rmtree
 
 
 def build(source_path, build_path, install_path, targets):
@@ -34,7 +35,7 @@ def build(source_path, build_path, install_path, targets):
             dest = os.path.join(install_path, name)
 
             if os.path.exists(dest):
-                shutil.rmtree(dest)
+                safe_rmtree(dest)
 
             print src
             print dest
