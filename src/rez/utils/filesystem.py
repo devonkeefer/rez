@@ -92,6 +92,21 @@ def safe_makedirs(path):
             if not os.path.exists(path):
                 raise
 
+def safe_rmtree(path):
+    """Delete a directory recursively without permission issues.
+    Especially, avoiding WindowsError(Error 5).
+    """
+    all_mode = (stat.S_IRUSR | stat.S_IRGRP |
+                stat.S_IXUSR | stat.S_IXGRP |
+                stat.S_IWUSR | stat.S_IWGRP)
+
+    for root, dirs, files in os.walk(path):  
+        for momo in dirs:
+            safe_chmod(os.path.join(root, momo), all_mode)
+        for momo in files:
+            safe_chmod(os.path.join(root, momo), all_mode)
+    shutil.rmtree(path)
+
 
 def is_subdirectory(path_a, path_b):
     """Returns True if `path_a` is a subdirectory of `path_b`."""

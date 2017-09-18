@@ -7,7 +7,7 @@ from rez.build_process_ import BuildProcessHelper, BuildType
 from rez.release_hook import ReleaseHookEvent
 from rez.exceptions import BuildError, ReleaseError
 from rez.utils.colorize import Printer, warning
-from rez.utils.filesystem import safe_makedirs, copy_or_replace
+from rez.utils.filesystem import safe_makedirs, copy_or_replace, safe_rmtree
 from rez.utils.sourcecode import IncludeModuleManager
 from hashlib import sha1
 import shutil
@@ -113,7 +113,7 @@ class LocalBuildProcess(BuildProcessHelper):
 
         # create directories (build, install)
         if clean and os.path.exists(variant_build_path):
-            shutil.rmtree(variant_build_path)
+            safe_rmtree(variant_build_path)
 
         safe_makedirs(variant_build_path)
 
