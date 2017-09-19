@@ -16,10 +16,10 @@ except ImportError:
     import subprocess
     class git(object):
         def clone(url, dirname):
-            return subprocess.call('git clone "{}" "{}"'.format(url, dirname))
+            return subprocess.call(['git', 'clone', url, dirname])
 
         def checkout(commit):
-            return subprocess.call('git checkout "{}"'.format(commit))
+            return subprocess.call(['git', 'checkout', commit])
 
 
 class GitReleaseVCSError(ReleaseVCSError):
